@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.Set;
+
 public record CreateProductRequestDto(
         @NotBlank(message = ERROR_MASSAGE_NAME_LENGTH)
         @Length(max =255, message = ERROR_MASSAGE_NAME_LENGTH)
@@ -19,6 +21,7 @@ public record CreateProductRequestDto(
         double price,
         @Max(10000)
         int quantity,
+        Set<Long> categoryIds,
         String image_url,
         @Nonnull
         status status

@@ -17,6 +17,7 @@ public class ProductMapperImpl implements ProductMapper {
                 dto.description(),
                 dto.price(),
                 dto.quantity(),
+                dto.categoryIds(),
                 dto.image_url(),
                 dto.status()
         );
@@ -30,6 +31,7 @@ public class ProductMapperImpl implements ProductMapper {
                 product.getDescription(),
                 product.getPrice(),
                 product.getQuantity(),
+                product.getCategories(),
                 product.getImage_url(),
                 product.getStatus()
         );

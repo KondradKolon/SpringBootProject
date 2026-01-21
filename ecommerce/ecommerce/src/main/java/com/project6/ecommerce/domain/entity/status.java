@@ -1,4 +1,4 @@
-package com.project6.ecommerce.domain.entity;
-
-public class status {
-}
+//package com.project6.ecommerce.domain.entity;
+//
+//public class status {
+//}
