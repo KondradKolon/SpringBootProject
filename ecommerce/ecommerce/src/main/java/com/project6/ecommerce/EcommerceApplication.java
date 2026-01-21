@@ -1,11 +1,12 @@
 package com.project6.ecommerce;
 
-import com.project6.ecommerce.domain.entity.User.User;
-import com.project6.ecommerce.repository.UserRepository;
+import com.project6.ecommerce.storage.StorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
+@EnableConfigurationProperties(StorageProperties.class)
 public class EcommerceApplication {
 
 	public static void main(String[] args) {

@@ -8,11 +8,10 @@ import com.project6.ecommerce.mapper.ProductMapper;
 import com.project6.ecommerce.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(path ="/api/v1/products")
@@ -23,12 +22,13 @@ public class ProductController {
         this.productService = productService;
         this.productMapper = productMapper;
     }
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductDto> createProduct (
-            @Valid @RequestBody CreateProductRequestDto createProductRequestDto
+            @RequestPart("product") @Valid CreateProductRequestDto createProductRequestDto,
+            @RequestPart(value = "image", required = false) MultipartFile imageFile
     ) {
         CreateProductRequest createProductRequest = productMapper.fromDto(createProductRequestDto);
-        Product product = productService.createProduct(createProductRequest);
+        Product product = productService.createProduct(createProductRequest, imageFile);;
         ProductDto createProductDto = productMapper.toDto(product);
         return new ResponseEntity<>(createProductDto, HttpStatus.CREATED);
     }
