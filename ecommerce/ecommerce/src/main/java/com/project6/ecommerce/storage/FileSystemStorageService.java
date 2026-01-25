@@ -52,7 +52,7 @@ public class FileSystemStorageService implements StorageService {
                     .normalize().toAbsolutePath();
 
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
-                // Security check
+                
                 throw new RuntimeException("Cannot store file outside current directory.");
             }
 

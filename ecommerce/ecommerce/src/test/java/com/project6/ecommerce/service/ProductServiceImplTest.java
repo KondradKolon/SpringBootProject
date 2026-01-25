@@ -63,7 +63,7 @@ class ProductServiceImplTest {
         productDto = new ProductDto(productId, "Test Product", "Desc", BigDecimal.TEN, 10, null, null, status.AVAILABLE, 0.0, 0);
     }
 
-    // Previous tests omitted for brevity, focusing on new Coverage Boost tests
+
 
     @Test
     void getFilteredProducts_ShouldCallRepositoryWithSpec() {
@@ -102,7 +102,7 @@ class ProductServiceImplTest {
     @Test
     void createProduct_ShouldSaveProduct_WhenValid() {
         // Arrange
-        // CreateProductRequest(name, desc, price, qty, catIds, image_url, status)
+
         CreateProductRequest request = new CreateProductRequest("New", "Desc", BigDecimal.TEN, 5, Set.of(), null, status.AVAILABLE);
         when(productRepository.save(any(Product.class))).thenReturn(product);
 
@@ -127,19 +127,18 @@ class ProductServiceImplTest {
 
     @Test
     void updateProduct_ShouldUpdateFields_WhenProductExists() {
-        // Arrange
-        // CreateProductRequest(name, desc, price, qty, catIds, image_url, status)
+        
         CreateProductRequest request = new CreateProductRequest("Updated", "Desc", BigDecimal.ONE, 1, null, null, status.NOT_AVAILABLE);
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-        when(productRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0)); // return proper object
+        when(productRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0)); 
         
-        // Mock mapper to return expected DTO
+
         when(productMapper.toDtoWithRating(any(), anyDouble(), anyInt())).thenReturn(new ProductDto(productId, "Updated", "Desc", BigDecimal.ONE, 1, null, null, status.NOT_AVAILABLE, 0.0, 0));
 
-        // Act
+
         ProductDto result = productService.updateProduct(productId, request);
 
-        // Assert
+
         assertEquals("Updated", result.name());
         assertEquals(status.NOT_AVAILABLE, result.status());
     }

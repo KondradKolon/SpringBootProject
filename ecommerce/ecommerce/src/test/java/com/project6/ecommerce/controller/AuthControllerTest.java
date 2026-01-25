@@ -41,7 +41,7 @@ class AuthControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @TestConfiguration // ADDED: Explicitly provide ObjectMapper for WebMvcTest slices
+    @TestConfiguration 
     static class Config {
         @Bean
         public ObjectMapper objectMapper() {

@@ -20,10 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AdminProductController {
 
     private final ProductService productService;
-    private final com.project6.ecommerce.service.CategoryService categoryService; // Changed from Repository to Service
+    private final com.project6.ecommerce.service.CategoryService categoryService; 
     private final ProductMapper productMapper;
 
-    private final CsvExportService csvExportService; // Injected
+    private final CsvExportService csvExportService; 
 
     // 1. GET: Wyświetl pusty formularz
     @GetMapping("/add")

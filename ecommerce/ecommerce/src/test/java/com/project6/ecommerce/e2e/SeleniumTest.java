@@ -21,8 +21,6 @@ class SeleniumTest {
 
     @BeforeEach
     void setUp() {
-        // Assuming ChromeDriver is installed or managed by WebDriverManager (not added, so assuming environment OK or user setup)
-        // For CI/Headless environments:
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless"); 
         options.addArguments("--disable-gpu");

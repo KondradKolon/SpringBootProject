@@ -22,11 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.*;
-import lombok.extern.slf4j.Slf4j; // Add import
+import lombok.extern.slf4j.Slf4j; 
 import jakarta.persistence.criteria.Predicate;
 
 @Service
-@Slf4j // Add annotation
+@Slf4j 
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -45,12 +45,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(CreateProductRequest request, MultipartFile imageFile) {
-        log.info("Creating new product: {}", request.name()); // LOG
+        log.info("Creating new product: {}", request.name()); 
 
         String savedFileName = null;
         Set<Category> categories = new HashSet<>();
         if (imageFile != null && !imageFile.isEmpty()) {
-            // zapisujemy plik na dysku i dostajemy nową nazwę
             savedFileName = storageService.store(imageFile);
         }
         if (request.categoryIds() != null && !request.categoryIds().isEmpty()) {
@@ -58,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (request.categoryIds() != null && categories.size() < request.categoryIds().size()) {
-            log.error("Category validation failed for product: {}", request.name()); // LOG ERROR
+            log.error("Category validation failed for product: {}", request.name());
             throw new RuntimeException("niektóre kategorie nie istnieją");
         }
         Product product = new Product(
@@ -94,23 +93,21 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.toDtoWithRating(product, avg, reviews.size());
     }
 
-    // aktualizacja danych produktu (bez zmiany zdjęcia dla uproszczenia)
+    
     @Override
-    @Transactional // transakcja wymagana żeby zapisać zmiany w bazie
+    @Transactional 
     public ProductDto updateProduct(UUID id, CreateProductRequest request) {
-        log.info("Updating product with ID: {}", id); // LOG
+        log.info("Updating product with ID: {}", id); 
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("produkt nie znaleziony"));
 
-        // aktualizacja prostych pól
         product.setName(request.name());
         product.setDescription(request.description());
         product.setPrice(request.price());
         product.setQuantity(request.quantity());
         product.setStatus(request.status());
 
-        // aktualizacja relacji z kategoriami tylko jeśli podano nowe
         if (request.categoryIds() != null) {
             Set<Category> categories = new HashSet<>(categoryRepository.findAllById(request.categoryIds()));
             if (categories.size() < request.categoryIds().size()) {
@@ -127,16 +124,14 @@ public class ProductServiceImpl implements ProductService {
                 .average()
                 .orElse(0.0);
 
-        // 5. Zwracamy kompletne DTO z ocenami
         return productMapper.toDtoWithRating(savedProduct, avg, reviews.size());
     }
 
-    // ▼▼▼ NOWA METODA: DELETE ▼▼▼
     @Override
     public void deleteProduct(UUID id) {
-        log.info("Deleting product with ID: {}", id); // LOG
+        log.info("Deleting product with ID: {}", id); 
         if (!productRepository.existsById(id)) {
-            log.warn("Attempt to delete non-existent product ID: {}", id); // LOG WARN
+            log.warn("Attempt to delete non-existent product ID: {}", id);
             throw new RuntimeException("Produkt nie znaleziony");
         }
         productRepository.deleteById(id);

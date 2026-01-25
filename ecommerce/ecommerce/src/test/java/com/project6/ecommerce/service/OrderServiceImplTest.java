@@ -126,7 +126,7 @@ class OrderServiceImplTest {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             orderService.placeOrder(cart, checkoutRequest);
         });
-        assertEquals("Cart is empty", exception.getMessage());
+        assertEquals("koszyk jest pusty", exception.getMessage());
     }
     
     @Test
@@ -142,7 +142,7 @@ class OrderServiceImplTest {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             orderService.placeOrder(cart, checkoutRequest);
         });
-        assertTrue(exception.getMessage().contains("Not enough stock"));
+        assertTrue(exception.getMessage().contains("za mało towaru na stanie"));
     }
 
     @Test

@@ -3,13 +3,13 @@ package com.project6.ecommerce.service;
 import com.project6.ecommerce.domain.entity.User.User;
 import com.project6.ecommerce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.NonNull; // <--- WAŻNY IMPORT
+import org.springframework.lang.NonNull; 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // Dobra praktyka przy JPA
+import org.springframework.transaction.annotation.Transactional; 
 
 import java.util.Collections;
 

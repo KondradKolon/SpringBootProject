@@ -23,22 +23,17 @@ public class Cart {
         int stock = product.quantity() != null ? product.quantity() : 0;
         int currentInCart = items.containsKey(product.id()) ? items.get(product.id()).getQuantity() : 0;
 
-        // Obliczamy ile jeszcze możemy dodać
         int newTotal = currentInCart + quantity;
 
-        // WALIDACJA 1: Nie możemy przekroczyć stanu magazynowego
         if (newTotal > stock) {
-            // Opcja bezpieczna: dodajemy tyle, ile się da (do maxa)
             newTotal = stock;
         }
 
-        if (newTotal <= 0) return; // Jeśli nie ma towaru, nic nie robimy
+        if (newTotal <= 0) return; 
 
         if (items.containsKey(product.id())) {
             items.get(product.id()).setQuantity(newTotal);
         } else {
-            // Tworzymy nowy item z wyliczoną bezpieczną ilością (tutaj quantity musimy dopasować)
-            // Ponieważ CartItem trzyma absolutną wartość, a my tu dodajemy, prościej jest stworzyć item i ustawić mu quantity
             CartItem item = new CartItem(product, newTotal);
             items.put(product.id(), item);
         }
@@ -49,9 +44,8 @@ public class Cart {
             CartItem item = items.get(productId);
             int stock = item.getProduct().quantity();
 
-            // WALIDACJA 2: Sprawdzamy czy wpisana liczba (np. 50) nie jest większa niż stan (np. 10)
             if (quantity > stock) {
-                quantity = stock; // "Hard cap" - ustawiamy max dostępny
+                quantity = stock; //jak wiecej niz na magazynie to zamawiamy tyle co jest
             }
 
             if (quantity <= 0) {

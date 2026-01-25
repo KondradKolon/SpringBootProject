@@ -7,7 +7,6 @@ import com.project6.ecommerce.domain.entity.Cart.CartItem;
 import com.project6.ecommerce.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
- // Corrected Import via boot.test...
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -33,7 +32,7 @@ class CheckoutControllerTest {
     @MockitoBean
     private Cart cart;
 
-    @MockitoBean // UPDATED
+    @MockitoBean
     private OrderService orderService;
 
     @Test
@@ -47,10 +46,10 @@ class CheckoutControllerTest {
 
     @Test
     void showCheckout_ShouldReturnView_WhenCartNotEmpty() throws Exception {
-        // Prepare CartItem with Product data for Thymeleaf rendering
+        
         ProductDto productDto = new ProductDto(UUID.randomUUID(), "Test Product", "Desc", BigDecimal.TEN, 10, null, null, null, 0.0, 0);
         CartItem cartItem = mock(CartItem.class);
-        when(cartItem.getProduct()).thenReturn(productDto); // Return DTO when getProduct() is called
+        when(cartItem.getProduct()).thenReturn(productDto); 
         when(cartItem.getQuantity()).thenReturn(1);
         when(cartItem.getTotalPrice()).thenReturn(BigDecimal.TEN);
 
@@ -71,7 +70,7 @@ class CheckoutControllerTest {
                         .param("lastName", "Doe")
                         .param("street", "Street")
                         .param("city", "City")
-                        .param("zipCode", "00-000") // Matches pattern if simple, assuming simple validation
+                        .param("zipCode", "00-000")     
                         .param("email", "john@example.com")
                         .param("paymentMethod", "CARD")
                         .param("deliveryMethod", "COURIER"))
@@ -84,7 +83,7 @@ class CheckoutControllerTest {
     @Test
     void placeOrder_ShouldReturnForm_WhenValidationFails() throws Exception {
         mockMvc.perform(post("/checkout")
-                        .param("firstName", "")) // Invalid
+                        .param("firstName", "")) 
                 .andExpect(status().isOk())
                 .andExpect(view().name("checkout/form"))
                 .andExpect(model().attributeHasErrors("checkoutRequest"));

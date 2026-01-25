@@ -15,8 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping(path = "/api/v1/auth")
+@Tag(name = "Authentication", description = "Endpointy do rejestracji i logowania")
 public class AuthController {
 
     private final UserService userService;
@@ -26,6 +32,11 @@ public class AuthController {
         this.userMapper = userMapper;
     }
 
+    @Operation(summary = "Rejestracja nowego użytkownika", description = "Tworzy nowe konto użytkownika w systemie.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Użytkownik został utworzony"),
+            @ApiResponse(responseCode = "400", description = "Nieprawidłowe dane (np. zły email)")
+    })
     @PostMapping("/register")
     public ResponseEntity<UserResponseDto> registerUser(
             @Valid @RequestBody CreateUserRequestDto createUserRequestDto

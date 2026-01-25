@@ -7,9 +7,9 @@ import com.project6.ecommerce.service.CategoryService;
 import com.project6.ecommerce.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc; // UPDATED
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest; // UPDATED
-import org.springframework.test.context.bean.override.mockito.MockitoBean; // UPDATED
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc; 
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest; 
+import org.springframework.test.context.bean.override.mockito.MockitoBean; 
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -28,14 +28,17 @@ class AdminProductControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean // UPDATED
+    @MockitoBean 
     private ProductService productService;
 
-    @MockitoBean // UPDATED
+    @MockitoBean 
     private CategoryService categoryService;
 
-    @MockitoBean // UPDATED
+    @MockitoBean 
     private ProductMapper productMapper;
+
+    @MockitoBean
+    private com.project6.ecommerce.service.CsvExportService csvExportService;
 
     @Test
     void showAddProductForm_ShouldReturnView() throws Exception {
@@ -59,9 +62,9 @@ class AdminProductControllerTest {
         // Act & Assert
         mockMvc.perform(multipart("/admin/products/add")
                         .file(image)
-                        .param("name", "Test Product") // Valid fields
+                        .param("name", "Test Product") 
                         .param("price", "100.00")
-                        .param("status", "AVAILABLE") // Enum
+                        .param("status", "AVAILABLE")
                         .param("quantity", "10"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/admin/products/add"))
@@ -75,7 +78,7 @@ class AdminProductControllerTest {
         // Arrange
         MockMultipartFile image = new MockMultipartFile("image", "test.jpg", "image/jpeg", "content".getBytes());
 
-        // Act & Assert (Empty name triggers validation error)
+        
         mockMvc.perform(multipart("/admin/products/add")
                         .file(image)
                         .param("name", "") // Invalid
@@ -100,6 +103,6 @@ class AdminProductControllerTest {
                         .param("status", "AVAILABLE"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("admin/product-form"))
-                .andExpect(model().attributeExists("error")); // Controller sets "error" attribute
+                .andExpect(model().attributeExists("error")); 
     }
 }

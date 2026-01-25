@@ -23,7 +23,8 @@ public class ArchitectureTest {
                             "javax..",
                             "jakarta..",
                             "org.springframework..",
-                            "lombok.."
+                            "lombok..",
+                            "io.swagger.."
                     );
 
     @ArchTest
@@ -34,10 +35,10 @@ public class ArchitectureTest {
     @ArchTest
     static final ArchRule services_should_only_be_accessed_by_controllers_or_other_services =
             classes().that().resideInAPackage("..service..")
-                    .should().onlyBeAccessed().byAnyPackage("..controller..", "..service..", "..config.."); // Added ..config..
+                    .should().onlyBeAccessed().byAnyPackage("..controller..", "..service..", "..config.."); 
 
     @ArchTest
     static final ArchRule repositories_should_only_be_accessed_by_services =
             classes().that().resideInAPackage("..repository..")
-                    .should().onlyBeAccessed().byAnyPackage("..service..", "..repository..", "..config.."); // Added ..config.. just in case, though DataInitializer now uses Services
+                    .should().onlyBeAccessed().byAnyPackage("..service..", "..repository..", "..config.."); 
 }

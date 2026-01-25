@@ -29,16 +29,14 @@ public class Order {
 
     private BigDecimal totalAmount;
     
-    // Address fields
     private String firstName;
     private String lastName;
     private String street;
     private String city;
     private String zipCode;
     
-    // Status
     @Enumerated(EnumType.STRING)
-    private status status; // reusing existing status or new enum? Let's use a new OrderStatus
+    private status status; 
 
     private LocalDateTime createdAt;
     

@@ -17,48 +17,44 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class) // 1. Włącza Mockito
+@ExtendWith(MockitoExtension.class) 
 class UserServiceTest {
 
-    @Mock // Atrapa repozytorium
+    @Mock 
     private UserRepository userRepository;
 
-    @Mock // Atrapa encodera
+    @Mock 
     private PasswordEncoder passwordEncoder;
 
-    @InjectMocks // Wstrzykuje atrapy do prawdziwego serwisu
+    @InjectMocks 
     private UserServiceImpl userService;
 
     @Test
     void shouldCreateUserSuccessfully() {
-        // GIVEN
+        
         CreateUserRequest request = new CreateUserRequest("Jan1", "jan1@vp.pl", "pass123", role.USER);
 
-        // Uczymy makiety jak się zachowywać (when... thenReturn)
         when(userRepository.existsByEmail(request.email())).thenReturn(false);
         when(passwordEncoder.encode("pass123")).thenReturn("encoded_pass");
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        // WHEN
         User result = userService.createUser(request);
 
-        // THEN
-        assertThat(result.getPassword()).isEqualTo("encoded_pass"); // Czy zaszyfrowano?
-        verify(userRepository).save(any(User.class)); // verify(): Czy save zostało wywołane?
+        assertThat(result.getPassword()).isEqualTo("encoded_pass"); 
+        verify(userRepository).save(any(User.class)); 
     }
 
     @Test
     void shouldThrowExceptionWhenEmailTaken() {
-        // GIVEN
+        
         CreateUserRequest request = new CreateUserRequest("Jan", "zajety@vp.pl", "pass", role.USER);
         when(userRepository.existsByEmail("zajety@vp.pl")).thenReturn(true);
 
-        // WHEN
         Throwable thrown = catchThrowable(() -> userService.createUser(request));
 
-        // THEN
+        
         assertThat(thrown).isInstanceOf(RuntimeException.class)
-                .hasMessage("User with this email already exists"); // Sprawdzamy komunikat błędu
-        verify(userRepository, never()).save(any()); // Upewniamy się, że NIE zapisano
+                .hasMessage("User with this email already exists"); 
+        verify(userRepository, never()).save(any()); 
     }
 }

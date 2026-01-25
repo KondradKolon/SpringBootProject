@@ -28,17 +28,6 @@ class AdminCategoryControllerTest {
     @MockitoBean
     private CategoryService categoryService;
 
-    // The error "No qualifying bean of type ProductService" in AdminProductController suggests
-    // that the ApplicationContext is trying to load ALL controllers or shared config?
-    // In @WebMvcTest(AdminCategoryController.class), only AdminCategoryController should be loaded.
-    // However, if there is a GlobalExceptionHandler or other advice picking up dependencies, it might trigger.
-    // OR if default "test" task runs all tests and context caching gets confused.
-    // Let's ensure we are strict.
-    
-    // Sometimes GlobalExceptionHandler requires beans? No, usually not.
-    // But DataInitializer might be picked up if @TestConfiguration is wrongly used or if @SpringBootTest is expected.
-    // For now, let's fix the tests logic itself (Redirects).
-
     @Test
     void listCategories_ShouldReturnViewAndModel() throws Exception {
         // Arrange

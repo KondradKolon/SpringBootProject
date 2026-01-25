@@ -38,14 +38,14 @@ public class ReviewServiceImpl implements ReviewService {
         review.setProduct(product);
         review.setUser(user);
         review.setRating(request.rating());
-        review.setContent(request.content()); // Changed from comment() to content()
+        review.setContent(request.content()); 
         review.setCreatedAt(LocalDateTime.now());
 
         return reviewRepository.save(review);
     }
 
     @Override
-    public void deleteReview(UUID id) { // Changed from Long to UUID
+    public void deleteReview(UUID id) { 
         reviewRepository.deleteById(id);
     }
 

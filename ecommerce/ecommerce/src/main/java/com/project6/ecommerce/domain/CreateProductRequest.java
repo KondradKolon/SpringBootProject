@@ -1,6 +1,5 @@
 package com.project6.ecommerce.domain;
 
-import com.project6.ecommerce.domain.entity.Category;
 import com.project6.ecommerce.domain.entity.Product.status;
 
 import java.math.BigDecimal;

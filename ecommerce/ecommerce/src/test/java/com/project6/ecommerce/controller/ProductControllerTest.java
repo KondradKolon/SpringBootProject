@@ -49,7 +49,7 @@ class ProductControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @TestConfiguration // ADDED: Explicitly provide ObjectMapper for WebMvcTest slices to match AuthControllerTest fix
+    @TestConfiguration
     static class Config {
         @Bean
         public ObjectMapper objectMapper() {

@@ -35,9 +35,8 @@ public class ProductMapperImpl implements ProductMapper {
                 product.getPrice(),
                 product.getQuantity(),
                 product.getCategories(),
-                product.getImage_url(), // Pamiętaj o swojej nazwie pola
+                product.getImage_url(), 
                 product.getStatus(),
-                // Wstawiamy to, co przyszło z serwisu:
                 averageRating,
                 reviewCount
         );

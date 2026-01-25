@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
+@AutoConfigureMockMvc
 public class LoginDebugTest {
 
     @Autowired
@@ -30,7 +30,6 @@ public class LoginDebugTest {
     public void debugLoginProcess() throws Exception {
         System.out.println("=== START DEBUGGING LOGIN ===");
         
-        // 1. Sprawdź, czy użytkownik istnieje w bazie (zaadowany z data.sql)
         String username = "admin123";
         User user = userRepository.findByName(username).orElse(null);
         
@@ -44,7 +43,6 @@ public class LoginDebugTest {
         System.out.println("   Stored Hash: " + user.getPassword());
         System.out.println("   Role: " + user.getRole());
 
-        // 2. Sprawdź hasło
         String[] passwordsToTest = {"123", "admin123", "admin", "password"};
         boolean passwordMatched = false;
         String validPassword = null;
@@ -64,7 +62,6 @@ public class LoginDebugTest {
         } else {
              System.out.println("✅ Found valid password: '" + validPassword + "'");
              
-             // 3. Próba logowania przez MockMvc
              System.out.println("   Attempting MockMvc login with '" + username + "' / '" + validPassword + "'...");
              mockMvc.perform(formLogin().user(username).password(validPassword))
                      .andExpect(status().is3xxRedirection())

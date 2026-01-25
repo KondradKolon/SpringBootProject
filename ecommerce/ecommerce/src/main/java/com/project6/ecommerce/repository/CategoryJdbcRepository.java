@@ -16,11 +16,14 @@ public class CategoryJdbcRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    // ▼▼▼ WYMÓG 1: RowMapper (Mapowanie wiersza z bazy na obiekt Java) ▼▼▼
+    private static final RowMapper<Category> categoryRowMapper = (rs, rowNum) -> {
+        Category category = new Category();
+        category.setId(rs.getLong("id"));
+        category.setName(rs.getString("name"));
+        return category;
+    };
 
-    // ▼▼▼ WYMÓG 2: Zapytania SELECT z query() ▼▼▼
     public List<Category> findAll() {
-        // Zakładam, że tabela nazywa się 'Category' (lub 'category' - w H2 zazwyczaj bez znaczenia)
         String sql = "SELECT id, name FROM Category";
         return jdbcTemplate.query(sql, categoryRowMapper);
     }
@@ -30,20 +33,16 @@ public class CategoryJdbcRepository {
         return jdbcTemplate.queryForObject(sql, categoryRowMapper, id);
     }
 
-    // ▼▼▼ WYMÓG 3: Operacje INSERT z update() ▼▼▼
     public int save(Category category) {
-        // WAŻNE: Nie podajemy ID, bo baza generuje je sama (IDENTITY)
         String sql = "INSERT INTO Category (name) VALUES (?)";
         return jdbcTemplate.update(sql, category.getName());
     }
 
-    // ▼▼▼ WYMÓG 4: Operacje UPDATE z update() ▼▼▼
     public int update(Category category) {
         String sql = "UPDATE Category SET name = ? WHERE id = ?";
         return jdbcTemplate.update(sql, category.getName(), category.getId());
     }
 
-    // ▼▼▼ WYMÓG 5: Operacje DELETE z update() ▼▼▼
     public int deleteById(Long id) {
         String sql = "DELETE FROM Category WHERE id = ?";
         return jdbcTemplate.update(sql, id);

@@ -29,7 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
 
     @Override
-    @Transactional // cała metoda w jednej transakcji - jak coś padnie to nic się nie zapisze
+    @Transactional
     public Order placeOrder(Cart cart, CheckoutRequest request) {
         if (cart.getItems().isEmpty()) {
             throw new RuntimeException("koszyk jest pusty");
@@ -51,8 +51,8 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalAmount(cart.getTotalAmount());
         order.setStatus(status.NEW);
         order.setCreatedAt(LocalDateTime.now());
+        // z koszyka na zamowkienie ->
 
-        // konwersja pozycji koszyka na pozycje zamówienia
         for (CartItem cartItem : cart.getItems()) {
             Product product = productRepository.findById(cartItem.getProduct().id())
                     .orElseThrow(() -> new RuntimeException("produkt nie istnieje"));
@@ -71,7 +71,6 @@ public class OrderServiceImpl implements OrderService {
         
         Order savedOrder = orderRepository.save(order);
         
-        // czyszczenie koszyka po udanym zakupie
         cart.clear();
         
         return savedOrder;

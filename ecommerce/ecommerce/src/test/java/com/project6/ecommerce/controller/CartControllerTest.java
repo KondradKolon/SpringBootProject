@@ -34,7 +34,7 @@ class CartControllerTest {
         mockMvc.perform(get("/cart"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("cart/view"))
-                .andExpect(model().attributeExists("cart")); // cart from MockBean
+                .andExpect(model().attributeExists("cart")); 
     }
 
     @Test

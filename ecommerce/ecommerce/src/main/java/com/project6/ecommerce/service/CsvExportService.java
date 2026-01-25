@@ -12,10 +12,9 @@ public class CsvExportService {
 
     public void writeProductsToCsv(Writer writer, List<ProductDto> products) {
         try {
-            // nagłówek kolumn
+                
             writer.write("ID,Name,Price,Quantity,Status\n");
 
-            // zapis rekordu po rekordzie
             for (ProductDto product : products) {
                 writer.write(escapeSpecialCharacters(product.id().toString()) + ",");
                 writer.write(escapeSpecialCharacters(product.name()) + ",");
@@ -28,15 +27,14 @@ public class CsvExportService {
         }
     }
 
-    // zabezpieczenie przed zepsuciem formatu csv gdy w danych są przecinki lub cudzysłowy
     private String escapeSpecialCharacters(String data) {
         if (data == null) {
             return "";
         }
-        String escapedData = data.replaceAll("\\R", " "); // usuń znaki nowej linii
+        String escapedData = data.replaceAll("\\R", " "); 
         if (data.contains(",") || data.contains("\"") || data.contains("'")) {
-            data = data.replace("\"", "\"\""); // podwójny cudzysłów (escaping)
-            escapedData = "\"" + data + "\""; // całość w cudzysłów
+            data = data.replace("\"", "\"\""); 
+            escapedData = "\"" + data + "\""; 
         }
         return escapedData;
     }

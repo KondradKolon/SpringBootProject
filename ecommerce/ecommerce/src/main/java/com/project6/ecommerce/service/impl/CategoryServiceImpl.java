@@ -13,11 +13,11 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final com.project6.ecommerce.repository.CategoryJdbcRepository categoryJdbcRepository; // Inject JDBC Repo
+    private final com.project6.ecommerce.repository.CategoryJdbcRepository categoryJdbcRepository; 
 
     @Override
     public List<Category> getAllCategories() {
-        return categoryJdbcRepository.findAll(); // Use JDBC for reading list
+        return categoryJdbcRepository.findAll(); 
     }
 
     @Override
@@ -32,7 +32,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void updateCategory(Category category) {
-        // JPA save does update if ID exists
         categoryRepository.save(category);
     }
 
