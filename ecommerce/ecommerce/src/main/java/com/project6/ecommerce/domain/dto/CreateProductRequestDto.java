@@ -3,11 +3,14 @@ package com.project6.ecommerce.domain.dto;
 import com.project6.ecommerce.domain.entity.Product.status;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.Internal;
 import org.hibernate.validator.constraints.Length;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 public record CreateProductRequestDto(
@@ -18,9 +21,10 @@ public record CreateProductRequestDto(
         @Nullable()
         String description,
         @Min(0)
-        double price,
+        @DecimalMin("0.01")
+        BigDecimal price,
         @Max(10000)
-        int quantity,
+        Integer quantity,
         Set<Long> categoryIds,
         String image_url,
         @Nonnull

@@ -3,6 +3,7 @@ package com.project6.ecommerce.domain.entity.Product;
 import com.project6.ecommerce.domain.entity.Category;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class Product {
     private String description;
 
     @Column(name="price",nullable = false)
-    private double price;
+    private BigDecimal price;
     @ManyToMany
     @JoinTable(
             name = "product_category",
@@ -32,7 +33,7 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
     @Column(name="quantity",updatable = true)
-    private int quantity;
+    private Integer quantity;
 
     @Column(name="image_url",nullable=true)
     private String image_url;
@@ -44,7 +45,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(UUID id, String name, String description,double price, int quantity, Set<Category>categories, String image_url, status status) {
+    public Product(UUID id, String name, String description,BigDecimal price, Integer quantity, Set<Category>categories, String image_url, status status) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -86,16 +87,16 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

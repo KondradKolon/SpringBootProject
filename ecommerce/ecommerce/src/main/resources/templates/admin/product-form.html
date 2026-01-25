@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj Produkt</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4>Dodaj Nowy Produkt</h4>
+                </div>
+                <div class="card-body">
+
+                    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+                    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+                    <form th:action="@{/admin/products/add}" th:object="${productDto}" method="post" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nazwa Produktu</label>
+                            <input type="text" class="form-control" th:field="*{name}" th:errorclass="is-invalid">
+                            <div class="invalid-feedback" th:errors="*{name}"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Opis</label>
+                            <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Cena</label>
+                                <input type="number" step="0.01" class="form-control" th:field="*{price}" th:errorclass="is-invalid">
+                                <div class="invalid-feedback" th:errors="*{price}"></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Ilość w magazynie</label>
+                                <input type="number" class="form-control" th:field="*{quantity}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Kategorie</label>
+                            <select class="form-select" th:field="*{categoryIds}" multiple>
+                                <option th:each="cat : ${categories}"
+                                        th:value="${cat.id}"
+                                        th:text="${cat.name}"></option>
+                            </select>
+                            <div class="form-text">Przytrzymaj Ctrl, aby wybrać wiele.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" th:field="*{status}">
+                                <option value="AVAILABLE">Dostępny</option>
+                                <option value="OUT_OF_STOCK">Niedostępny</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Zdjęcie Produktu</label>
+                            <input type="file" name="image" class="form-control" accept="image/*">
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Zapisz Produkt</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Twój Koszyk</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+  <h2 class="mb-4">Twój Koszyk</h2>
+
+  <div class="card shadow-sm border-0" th:if="${cart.itemsCount > 0}">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="bg-light">
+        <tr>
+          <th class="ps-4">Produkt</th>
+          <th>Cena</th>
+          <th>Ilość</th>
+          <th>Suma</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cart.items}" class="align-middle">
+          <td class="ps-4">
+            <div class="d-flex align-items-center">
+              <img th:if="${item.product.image_url != null}"
+                   th:src="@{'/product-images/' + ${item.product.image_url}}"
+                   style="width: 50px; height: 50px; object-fit: cover;" class="rounded me-3">
+              <span th:text="${item.product.name}" class="fw-bold">Nazwa</span>
+            </div>
+          </td>
+          <td style="width: 150px;">
+            <form th:action="@{/cart/update}" method="post" class="d-flex">
+              <input type="hidden" name="productId" th:value="${item.product.id}">
+
+              <input type="number"
+                     name="quantity"
+                     class="form-control form-control-sm me-2 text-center"
+                     th:value="${item.quantity}"
+                     min="1"
+                     th:max="${item.product.quantity}"
+                     onchange="this.form.submit()">
+
+              <button type="submit" class="btn btn-sm btn-light border" title="Zaktualizuj">↻</button>
+            </form>
+
+            <small class="text-muted" style="font-size: 0.7em;">
+              Max: <span th:text="${item.product.quantity}"></span>
+            </small>
+          </td>
+          <td class="fw-bold text-success" th:text="${item.totalPrice} + ' PLN'">200 PLN</td>
+          <td class="text-end pe-4">
+            <a th:href="@{'/cart/remove/' + ${item.product.id}}" class="btn btn-sm btn-outline-danger">&times;</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer bg-white p-4">
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="/" class="btn btn-outline-secondary">&larr; Kontynuuj zakupy</a>
+        <div class="text-end">
+          <h4 class="mb-3">Razem: <span class="text-success" th:text="${cart.totalAmount} + ' PLN'">0.00 PLN</span></h4>
+          <a href="/checkout" class="btn btn-success btn-lg">Przejdź do kasy &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div th:if="${cart.itemsCount == 0}" class="text-center py-5">
+    <h3 class="text-muted">Twój koszyk jest pusty 🛒</h3>
+    <p class="mb-4">Dodaj coś fajnego, zanim ktoś Cię ubiegnie!</p>
+    <a href="/" class="btn btn-primary">Wróć do sklepu</a>
+  </div>
+</div>
+
+</body>
+</html>

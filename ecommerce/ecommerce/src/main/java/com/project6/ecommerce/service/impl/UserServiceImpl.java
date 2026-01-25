@@ -32,7 +32,11 @@ public class UserServiceImpl implements UserService {
         user.setName(request.name());
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
-        user.setRole(role.USER);
+        if (request.role() != null) {
+            user.setRole(request.role());
+        } else {
+            user.setRole(role.USER);
+        }
 
         return userRepository.save(user);
     }

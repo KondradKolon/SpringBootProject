@@ -25,6 +25,9 @@ public class ProductMapperImpl implements ProductMapper {
 
     @Override
     public ProductDto toDto(Product product) {
+        return toDtoWithRating(product, 0.0, 0);
+    }
+    public ProductDto toDtoWithRating(Product product, Double averageRating, Integer reviewCount) {
         return new ProductDto(
                 product.getId(),
                 product.getName(),
@@ -32,8 +35,11 @@ public class ProductMapperImpl implements ProductMapper {
                 product.getPrice(),
                 product.getQuantity(),
                 product.getCategories(),
-                product.getImage_url(),
-                product.getStatus()
+                product.getImage_url(), // Pamiętaj o swojej nazwie pola
+                product.getStatus(),
+                // Wstawiamy to, co przyszło z serwisu:
+                averageRating,
+                reviewCount
         );
     }
 

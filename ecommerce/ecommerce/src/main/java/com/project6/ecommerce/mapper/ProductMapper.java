@@ -7,5 +7,5 @@ import com.project6.ecommerce.domain.entity.Product.Product;
 
 public interface ProductMapper {
     CreateProductRequest fromDto(CreateProductRequestDto dto);
-    ProductDto toDto(Product product);
+    ProductDto  toDto(Product product);
 }

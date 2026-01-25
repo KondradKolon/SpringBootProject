@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edycja Kategorii</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light p-5">
+<div class="container" style="max-width: 500px;">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0" th:text="${category.id == null} ? 'Nowa Kategoria' : 'Edycja Kategorii'">Formularz</h4>
+        </div>
+        <div class="card-body">
+            <form th:action="${category.id == null} ? @{/admin/categories/add} : @{/admin/categories/edit}"
+                  th:object="${category}" method="post">
+
+                <input type="hidden" th:field="*{id}">
+
+                <div class="mb-3">
+                    <label class="form-label">Nazwa Kategorii</label>
+                    <input type="text" th:field="*{name}" class="form-control" required placeholder="np. Telefony">
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success">Zapisz</button>
+                    <a href="/admin/categories" class="btn btn-outline-secondary">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

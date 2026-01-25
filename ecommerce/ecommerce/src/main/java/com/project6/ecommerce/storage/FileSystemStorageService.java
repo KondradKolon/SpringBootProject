@@ -27,6 +27,11 @@ public class FileSystemStorageService implements StorageService {
             throw new RuntimeException("File upload location can not be Empty.");
         }
         this.rootLocation = Paths.get(properties.getLocation());
+        try {
+            Files.createDirectories(rootLocation);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize storage location", e);
+        }
     }
 
     @Override
