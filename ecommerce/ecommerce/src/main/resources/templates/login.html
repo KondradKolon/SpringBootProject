@@ -15,15 +15,27 @@
     <div th:if="${param.logout}" class="alert alert-success">
         Wylogowano pomyślnie.
     </div>
+    <div th:if="${param.registered}" class="alert alert-success">
+        Konto utworzone! Możesz się zalogować.
+    </div>
 
     <form th:action="@{/login}" method="post">
+        <div class="mb-3">
+            <input type="text" name="username" class="form-control" placeholder="Nazwa użytkownika" required>
+        </div>
 
-        <input type="text" name="username" class="form-control" placeholder="name">
+        <div class="mb-3">
+            <input type="password" name="password" class="form-control" placeholder="Hasło" required>
+        </div>
 
-        <input type="password" name="password" class="form-control" placeholder="Hasło">
-
-        <button type="submit">Zaloguj</button>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Zaloguj</button>
+        </div>
     </form>
+
+    <div class="mt-3 text-center">
+        <p>Nie masz konta? <a th:href="@{/register}">Zarejestruj się</a></p>
+    </div>
 </div>
 
 </body>

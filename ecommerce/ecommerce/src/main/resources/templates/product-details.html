@@ -95,6 +95,12 @@
             <span th:text="${review.rating}">5</span>/5 ⭐
           </div>
           <p class="mb-1 text-break" th:text="${review.content}">Treść opinii...</p>
+          
+          <div sec:authorize="hasAuthority('ADMIN')" class="mt-2 text-end">
+             <a th:href="@{'/admin/reviews/delete/' + ${review.id}}" 
+                class="btn btn-sm btn-danger"
+                onclick="return confirm('Czy na pewno chcesz usunąć tę opinię?')">Usuń (Admin)</a>
+          </div>
         </div>
 
         <div th:if="${#lists.isEmpty(reviews)}" class="text-center py-5 text-muted bg-white border rounded">

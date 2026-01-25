@@ -31,8 +31,8 @@ public class ReviewServiceImpl implements ReviewService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        User user = userRepository.findByEmail(currentPrincipalName)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByName(currentPrincipalName)
+                .orElseThrow(() -> new RuntimeException("User not found: " + currentPrincipalName));
 
         Review review = new Review();
         review.setProduct(product);
